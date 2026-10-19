@@ -1,3 +1,61 @@
 <resources>
     <string name="app_name">TEJISUR</string>
+
+    <!-- ========== Comunes ========== -->
+    <string name="label_orden_trabajo">Orden de Trabajo (OT)</string>
+    <string name="label_lote">Lote</string>
+    <string name="label_unidad">Unidad de medida</string>
+    <string name="unidad_kg">Kilogramos (kg)</string>
+    <string name="unidad_m">Metros (m)</string>
+    <string name="spinner_hint_ot">Seleccione una OT</string>
+    <string name="spinner_hint_lote">Seleccione un lote</string>
+    <string name="spinner_hint_etapa">Seleccione una etapa</string>
+    <string name="btn_registrar">Registrar</string>
+
+    <!-- Errores de validación comunes -->
+    <string name="error_ot_requerida">Debe seleccionar una Orden de Trabajo</string>
+    <string name="error_lote_requerido">Debe seleccionar un lote</string>
+    <string name="error_cantidad_requerida">Ingrese una cantidad</string>
+    <string name="error_cantidad_invalida">La cantidad debe ser un número mayor a 0</string>
+    <string name="error_unidad_requerida">Seleccione la unidad de medida</string>
+    <string name="error_formulario_incompleto">Revise los campos marcados en rojo</string>
+
+    <!-- ========== HU01 - Registro de Consumo ========== -->
+    <string name="consumo_titulo">Registrar Consumo</string>
+    <string name="consumo_subtitulo">Materia prima utilizada en la orden de trabajo</string>
+    <string name="label_cantidad_consumida">Cantidad consumida</string>
+    <string name="hint_cantidad_consumida">Ej. 12.5</string>
+    <string name="label_tipo_fibra">Tipo de fibra</string>
+    <string name="fibra_pima">Algodón Pima</string>
+    <string name="fibra_alpaca">Alpaca</string>
+    <string name="error_fibra_requerida">Seleccione el tipo de fibra</string>
+    <string name="consumo_registrado_exito">Consumo registrado: %1$s %2$s de %3$s (OT %4$s · Lote %5$s)</string>
+
+    <!-- ========== HU02 - Registro de Merma ========== -->
+    <string name="merma_titulo">Registrar Merma</string>
+    <string name="merma_subtitulo">Desperdicio generado durante la producción</string>
+    <string name="label_etapa_productiva">Etapa productiva</string>
+    <string name="etapa_corte">Corte</string>
+    <string name="etapa_confeccion">Confección</string>
+    <string name="label_cantidad_merma">Cantidad de merma</string>
+    <string name="hint_cantidad_merma">Ej. 0.8</string>
+    <string name="error_etapa_requerida">Debe seleccionar la etapa productiva</string>
+    <string name="merma_registrada_exito">Merma registrada: %1$s %2$s en %3$s (OT %4$s · Lote %5$s)</string>
+
+    <!-- ========== HU03 / HU16 - Consulta de Mermas y Alertas ========== -->
+    <string name="consulta_titulo">Consulta de Mermas</string>
+    <string name="consulta_subtitulo">Seguimiento de merma por lote de producción</string>
+    <string name="consulta_leyenda_normal">Dentro del límite (≤ 5%)</string>
+    <string name="consulta_leyenda_excesiva">Merma excesiva (&gt; 5%)</string>
+    <string name="consulta_sin_registros">Aún no hay lotes con consumo y merma registrados</string>
+    <string name="item_label_ot">OT</string>
+    <string name="item_label_lote">Lote</string>
+    <string name="item_label_consumo">Consumo</string>
+    <string name="item_label_merma">Merma</string>
+    <string name="item_label_porcentaje">% Merma</string>
+    <string name="item_formato_cantidad">%1$.2f %2$s</string>
+    <string name="item_formato_porcentaje">%1$.1f%%</string>
+    <string name="item_estado_normal">Normal</string>
+    <string name="item_estado_alerta">Alerta: merma excesiva</string>
+    <string name="cd_indicador_merma">Indicador de nivel de merma</string>
 </resources>
