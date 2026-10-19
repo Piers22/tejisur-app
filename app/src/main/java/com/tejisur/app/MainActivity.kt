@@ -1,47 +1,26 @@
 package com.tejisur.app
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.tejisur.app.ui.theme.TEJISURTheme
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
+import com.tejisur.app.produccion.ui.RegistroConsumoFragment
+import com.tejisur.app.produccion.ui.RegistroMermaFragment
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            TEJISURTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+
+        // Cargamos el Fragment directamente en el contenedor raíz para pruebas rápidas
+        if (savedInstanceState == null) {
+            supportFragmentManager.commit {
+                // AQUÍ CARGAS LA HU01 (Consumo)
+                //replace(android.R.id.content, RegistroConsumoFragment())
+
+                // CUANDO QUIERAS PROBAR LA HU02 (Merma), COMENTA LA LÍNEA DE ARRIBA
+                // Y DESCOMENTA LA LÍNEA DE ABAJO:
+                 replace(android.R.id.content, RegistroMermaFragment())
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TEJISURTheme {
-        Greeting("Android")
     }
 }

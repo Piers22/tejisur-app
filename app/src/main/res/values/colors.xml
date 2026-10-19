@@ -7,4 +7,21 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Paleta TEJISUR (Sprint 1 - Vistas XML) -->
+    <color name="tejisur_primary">#FF1F3A5F</color>
+    <color name="tejisur_primary_dark">#FF142740</color>
+    <color name="tejisur_accent">#FFC8963E</color>
+    <color name="tejisur_background">#FFF4F6FA</color>
+    <color name="tejisur_surface">#FFFFFFFF</color>
+    <color name="tejisur_outline">#FFD5DBE5</color>
+    <color name="tejisur_text_primary">#FF1B2430</color>
+    <color name="tejisur_text_secondary">#FF5E6B7D</color>
+    <color name="tejisur_error">#FFC62828</color>
+
+    <!-- Estados de merma (HU16) -->
+    <color name="merma_normal">#FF2E7D32</color>
+    <color name="merma_normal_bg">#FFE8F5E9</color>
+    <color name="merma_excesiva">#FFC62828</color>
+    <color name="merma_excesiva_bg">#FFFDECEA</color>
 </resources>
