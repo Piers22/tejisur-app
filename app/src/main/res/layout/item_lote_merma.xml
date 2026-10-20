@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Fila del RecyclerView (HU03) con soporte de alerta (HU16).
-    Para merma > 5% el Adapter debe cambiar:
+    Si la merma supera el umbral de Planta, LoteMermaAdapter cambia:
       - viewIndicadorMerma.setBackgroundColor(merma_excesiva)
       - clItemLoteMerma.backgroundTintList (merma_excesiva_bg)
       - tvPorcentajeMerma (texto + backgroundTintList) y tvEstadoMerma
@@ -155,18 +155,38 @@
         app:layout_constraintTop_toBottomOf="@id/tvLabelMermaItem"
         tools:text="3.84 kg" />
 
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrierValores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="tvLote,tvConsumo,tvMerma" />
+
+    <!-- Fibra y fecha del último registro de merma (filtros de HU03) -->
+    <TextView
+        android:id="@+id/tvDetalleLote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_label"
+        android:textColor="@color/tejisur_text_secondary"
+        android:textSize="@dimen/text_error"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvLabelOtItem"
+        app:layout_constraintTop_toBottomOf="@id/barrierValores"
+        tools:text="Algodón Pima · 16/10/2026" />
+
     <!-- Estado (texto de alerta HU16) -->
     <TextView
         android:id="@+id/tvEstadoMerma"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/margin_label"
         android:text="@string/item_estado_normal"
         android:textColor="@color/merma_normal"
         android:textSize="@dimen/text_error"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tvLabelOtItem"
-        app:layout_constraintTop_toBottomOf="@id/tvLote" />
+        app:layout_constraintTop_toBottomOf="@id/tvDetalleLote" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -45,9 +45,39 @@
     <!-- ========== HU03 / HU16 - Consulta de Mermas y Alertas ========== -->
     <string name="consulta_titulo">Consulta de Mermas</string>
     <string name="consulta_subtitulo">Seguimiento de merma por lote de producción</string>
-    <string name="consulta_leyenda_normal">Dentro del límite (≤ 5%)</string>
-    <string name="consulta_leyenda_excesiva">Merma excesiva (&gt; 5%)</string>
+    <!-- %1$.1f = umbral definido por Planta (ConfiguracionPlanta) -->
+    <string name="consulta_leyenda_normal">Dentro del umbral (≤ %1$.1f%%)</string>
+    <string name="consulta_leyenda_excesiva">Merma excesiva (&gt; %1$.1f%%)</string>
     <string name="consulta_sin_registros">Aún no hay lotes con consumo y merma registrados</string>
+    <string name="consulta_sin_resultados">Ningún lote coincide con los filtros aplicados</string>
+    <plurals name="consulta_resultados">
+        <item quantity="one">%1$d lote encontrado</item>
+        <item quantity="many">%1$d lotes encontrados</item>
+        <item quantity="other">%1$d lotes encontrados</item>
+    </plurals>
+    <plurals name="consulta_banner_alerta">
+        <item quantity="one">⚠ %1$d lote supera el umbral de merma tolerable (%2$.1f%%)</item>
+        <item quantity="many">⚠ %1$d lotes superan el umbral de merma tolerable (%2$.1f%%)</item>
+        <item quantity="other">⚠ %1$d lotes superan el umbral de merma tolerable (%2$.1f%%)</item>
+    </plurals>
+
+    <!-- Filtros de la consulta (HU03) -->
+    <string name="filtro_label_lote">Lote</string>
+    <string name="filtro_todos_lotes">Todos los lotes</string>
+    <string name="filtro_label_fibra">Tipo de fibra</string>
+    <string name="filtro_todas_fibras">Todas las fibras</string>
+    <string name="filtro_label_fecha">Fecha de registro de merma</string>
+    <string name="filtro_fecha_desde">Desde</string>
+    <string name="filtro_fecha_hasta">Hasta</string>
+    <string name="filtro_fecha_desde_valor">Desde: %1$s</string>
+    <string name="filtro_fecha_hasta_valor">Hasta: %1$s</string>
+    <string name="filtro_quitar_fecha">Quitar fecha</string>
+    <string name="filtro_ordenar_porcentaje" formatted="false">Ordenar por % de merma (mayor a menor)</string>
+    <string name="btn_limpiar_filtros">Limpiar</string>
+    <string name="error_rango_fechas">La fecha «Desde» no puede ser posterior a la fecha «Hasta»</string>
+
+    <!-- Fila de lote -->
+    <string name="item_detalle_lote">%1$s · %2$s</string>
     <string name="item_label_ot">OT</string>
     <string name="item_label_lote">Lote</string>
     <string name="item_label_consumo">Consumo</string>
@@ -55,7 +85,18 @@
     <string name="item_label_porcentaje">% Merma</string>
     <string name="item_formato_cantidad">%1$.2f %2$s</string>
     <string name="item_formato_porcentaje">%1$.1f%%</string>
-    <string name="item_estado_normal">Normal</string>
-    <string name="item_estado_alerta">Alerta: merma excesiva</string>
+    <string name="item_estado_normal">Dentro del umbral</string>
+    <string name="item_estado_alerta">Alerta: merma excesiva (supera %1$.1f%%)</string>
     <string name="cd_indicador_merma">Indicador de nivel de merma</string>
+
+    <!-- Diálogo de alerta (HU16) -->
+    <string name="alerta_titulo">Merma excesiva detectada</string>
+    <string name="alerta_mensaje">Lote: %1$s\nOrden de trabajo: %2$s\nMerma del lote: %3$.1f%%\nUmbral tolerable: %4$.1f%%\n\nLa merma del lote supera el umbral definido por Planta.</string>
+    <string name="alerta_btn_ver_consulta">Ver consulta</string>
+    <string name="alerta_btn_entendido">Entendido</string>
+
+    <!-- ========== Navegación ========== -->
+    <string name="nav_consumo">Consumo</string>
+    <string name="nav_merma">Merma</string>
+    <string name="nav_consulta">Consulta</string>
 </resources>
