@@ -55,9 +55,12 @@ class LoginFragment : Fragment() {
             Toast.makeText(requireContext(), getString(R.string.login_exito, usuario), Toast.LENGTH_SHORT).show()
             
             // Navegación conectada hacia el Registro de Consumo (HU01)
-            parentFragmentManager.commit {
-                replace(android.R.id.content, RegistroConsumoFragment())
-            }
+            (activity as? com.tejisur.app.MainActivity)?.mostrarSeccion(com.tejisur.app.MainActivity.Seccion.CONSUMO)
+                ?: run {
+                    parentFragmentManager.commit {
+                        replace(android.R.id.content, RegistroConsumoFragment())
+                    }
+                }
         } else {
             binding.etContrasena.text?.clear()
             Toast.makeText(requireContext(), R.string.login_error_credenciales, Toast.LENGTH_SHORT).show()

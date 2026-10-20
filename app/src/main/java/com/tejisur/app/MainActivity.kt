@@ -2,6 +2,7 @@ package com.tejisur.app
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -15,13 +16,15 @@ import androidx.fragment.app.commit
 import com.tejisur.app.databinding.ActivityMainBinding
 import com.tejisur.app.produccion.model.AlertaMerma
 import com.tejisur.app.produccion.ui.ConsultaMermasFragment
+import com.tejisur.app.produccion.ui.LoginFragment
 import com.tejisur.app.produccion.ui.ProduccionViewModel
 import com.tejisur.app.produccion.ui.RegistroConsumoFragment
 import com.tejisur.app.produccion.ui.RegistroMermaFragment
-import com.tejisur.app.produccion.ui.LoginFragment
 
 /**
- * Contenedor de las secciones de Producción con una barra inferior:
+ * Contenedor principal de la aplicación TEJISUR.
+ * Inicia con la pantalla de Login (requisito previo a HU01) y ofrece
+ * barra inferior de navegación para las secciones de Producción:
  * Consumo (HU01), Merma (HU02) y Consulta (HU03 / HU16).
  *
  * Los fragments comparten el mismo [ProduccionViewModel] (activityViewModels),
@@ -31,13 +34,13 @@ import com.tejisur.app.produccion.ui.LoginFragment
  */
 class MainActivity : AppCompatActivity() {
 
-    private enum class Seccion { CONSUMO, MERMA, CONSULTA }
+    enum class Seccion { LOGIN, CONSUMO, MERMA, CONSULTA }
 
     private lateinit var binding: ActivityMainBinding
 
     private val viewModel: ProduccionViewModel by viewModels()
 
-    private var seccionActual = Seccion.CONSUMO
+    private var seccionActual = Seccion.LOGIN
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,11 +50,12 @@ class MainActivity : AppCompatActivity() {
 
         seccionActual = savedInstanceState?.getString(KEY_SECCION)
             ?.let { Seccion.valueOf(it) }
-            ?: Seccion.CONSUMO
+            ?: Seccion.LOGIN
 
         if (savedInstanceState == null) {
             mostrarSeccion(seccionActual, forzar = true)
         } else {
+            actualizarVisibilidadNavegacion()
             marcarNavegacion() // El FragmentManager ya restauró el fragment visible
         }
 
@@ -65,9 +69,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun mostrarSeccion(seccion: Seccion, forzar: Boolean = false) {
+    fun mostrarSeccion(seccion: Seccion, forzar: Boolean = false) {
         if (seccion == seccionActual && !forzar) return
         seccionActual = seccion
+        actualizarVisibilidadNavegacion()
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             replace(R.id.contenedorFragment, crearFragment(seccion))
@@ -75,7 +80,13 @@ class MainActivity : AppCompatActivity() {
         marcarNavegacion()
     }
 
+    private fun actualizarVisibilidadNavegacion() {
+        val esLogin = seccionActual == Seccion.LOGIN
+        binding.llNavegacion.visibility = if (esLogin) View.GONE else View.VISIBLE
+    }
+
     private fun crearFragment(seccion: Seccion): Fragment = when (seccion) {
+        Seccion.LOGIN -> LoginFragment()
         Seccion.CONSUMO -> RegistroConsumoFragment()
         Seccion.MERMA -> RegistroMermaFragment()
         Seccion.CONSULTA -> ConsultaMermasFragment()
@@ -83,6 +94,7 @@ class MainActivity : AppCompatActivity() {
 
     /** Resalta la pestaña activa con el color primario de TEJISUR. */
     private fun marcarNavegacion() {
+        if (seccionActual == Seccion.LOGIN) return
         val pestanas: Map<Seccion, TextView> = mapOf(
             Seccion.CONSUMO to binding.navConsumo,
             Seccion.MERMA to binding.navMerma,
@@ -98,6 +110,22 @@ class MainActivity : AppCompatActivity() {
             TextViewCompat.setCompoundDrawableTintList(vista, ColorStateList.valueOf(color))
         }
     }
+
+    /** HU16 - Muestra lote, OT, % de merma y umbral superado. */
+    private fun mostrarAlertaMerma(alerta: AlertaMerma) {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.alerta_titulo)
+            .setMessage(
+                getString(
+                    R.string.alerta_mensaje,
+                    alerta.lote,
+                    alerta.ordenTrabajo,
+                    alerta.porcentajeMerma,
+                    alerta.umbral
+                )
+            )
+            .setPositiveButton(R.string.alerta_btn_ver_consulta) { _, _ ->
+                mostrarSeccion(Seccion.CONSULTA)
             }
             .setNegativeButton(R.string.alerta_btn_entendido, null)
             .show()
