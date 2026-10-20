@@ -24,4 +24,7 @@
     <color name="merma_normal_bg">#FFE8F5E9</color>
     <color name="merma_excesiva">#FFC62828</color>
     <color name="merma_excesiva_bg">#FFFDECEA</color>
+
+    <!-- Fondo del icono adaptativo (launcher) -->
+    <color name="ic_launcher_background">#FFFFFFFF</color>
 </resources>
