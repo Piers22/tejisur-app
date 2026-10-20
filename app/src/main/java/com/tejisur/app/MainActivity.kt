@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import com.tejisur.app.produccion.ui.RegistroConsumoFragment
 import com.tejisur.app.produccion.ui.RegistroMermaFragment
+import com.tejisur.app.produccion.ui.LoginFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,9 +18,10 @@ class MainActivity : AppCompatActivity() {
                 // AQUÍ CARGAS LA HU01 (Consumo)
                 //replace(android.R.id.content, RegistroConsumoFragment())
 
-                // CUANDO QUIERAS PROBAR LA HU02 (Merma), COMENTA LA LÍNEA DE ARRIBA
-                // Y DESCOMENTA LA LÍNEA DE ABAJO:
-                 replace(android.R.id.content, RegistroMermaFragment())
+                //replace(android.R.id.content, RegistroMermaFragment())
+
+                replace(android.R.id.content, LoginFragment())
+
             }
         }
     }

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Login de Operario - Requisito previo a HU01 (Registrar consumo) -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clLogin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tejisur_background"
+    android:padding="@dimen/margin_screen"
+    tools:context=".produccion.ui.LoginFragment">
+
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/ivLogoLogin"
+        android:layout_width="@dimen/size_logo_login"
+        android:layout_height="@dimen/size_logo_login"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/login_logo_descripcion"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_tejisur_logo_oficial"
+        app:layout_constraintBottom_toTopOf="@id/tvTituloLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <!-- Encabezado -->
+    <TextView
+        android:id="@+id/tvTituloLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_section"
+        android:gravity="center"
+        android:text="@string/login_titulo"
+        android:textColor="@color/tejisur_primary"
+        android:textSize="@dimen/text_title"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/tvSubtituloLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivLogoLogin" />
+
+    <TextView
+        android:id="@+id/tvSubtituloLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:gravity="center"
+        android:text="@string/login_subtitulo"
+        android:textColor="@color/tejisur_text_secondary"
+        android:textSize="@dimen/text_subtitle"
+        app:layout_constraintBottom_toTopOf="@id/tvLabelUsuario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTituloLogin" />
+
+    <!-- Usuario -->
+    <TextView
+        android:id="@+id/tvLabelUsuario"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_section"
+        android:labelFor="@id/etUsuario"
+        android:text="@string/login_label_usuario"
+        android:textColor="@color/tejisur_text_primary"
+        android:textSize="@dimen/text_label"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/etUsuario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtituloLogin" />
+
+    <EditText
+        android:id="@+id/etUsuario"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_input"
+        android:layout_marginTop="@dimen/margin_label"
+        android:autofillHints="username"
+        android:background="@drawable/bg_input"
+        android:hint="@string/login_hint_usuario"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:maxLines="1"
+        android:paddingStart="@dimen/padding_input"
+        android:paddingEnd="@dimen/padding_input"
+        android:textColor="@color/tejisur_text_primary"
+        android:textColorHint="@color/tejisur_text_secondary"
+        android:textSize="@dimen/text_body"
+        app:layout_constraintBottom_toTopOf="@id/tvLabelContrasena"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLabelUsuario" />
+
+    <!-- Contraseña -->
+    <TextView
+        android:id="@+id/tvLabelContrasena"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_section"
+        android:labelFor="@id/etContrasena"
+        android:text="@string/login_label_contrasena"
+        android:textColor="@color/tejisur_text_primary"
+        android:textSize="@dimen/text_label"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/etContrasena"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etUsuario" />
+
+    <EditText
+        android:id="@+id/etContrasena"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_input"
+        android:layout_marginTop="@dimen/margin_label"
+        android:autofillHints="password"
+        android:background="@drawable/bg_input"
+        android:hint="@string/login_hint_contrasena"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:paddingStart="@dimen/padding_input"
+        android:paddingEnd="@dimen/padding_input"
+        android:textColor="@color/tejisur_text_primary"
+        android:textColorHint="@color/tejisur_text_secondary"
+        android:textSize="@dimen/text_body"
+        app:layout_constraintBottom_toTopOf="@id/btnIniciarSesion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLabelContrasena" />
+
+    <!-- Acción -->
+    <Button
+        android:id="@+id/btnIniciarSesion"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_button"
+        android:layout_marginTop="@dimen/margin_section"
+        android:background="@drawable/bg_button_primary"
+        android:text="@string/login_btn_iniciar_sesion"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_body"
+        android:textStyle="bold"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etContrasena" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

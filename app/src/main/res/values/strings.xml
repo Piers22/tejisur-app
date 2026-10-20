@@ -58,4 +58,19 @@
     <string name="item_estado_normal">Normal</string>
     <string name="item_estado_alerta">Alerta: merma excesiva</string>
     <string name="cd_indicador_merma">Indicador de nivel de merma</string>
+
+        <!-- ========== Login de Operario (requisito HU01) ========== -->
+    <string name="login_titulo">TEJISUR - Control de Producción</string>
+    <string name="login_subtitulo">Inicie sesión para registrar consumos</string>
+    <string name="login_logo_descripcion">Logotipo de TEJISUR</string>
+    <string name="login_label_usuario">Usuario</string>
+    <string name="login_hint_usuario">Ej. operario01</string>
+    <string name="login_label_contrasena">Contraseña</string>
+    <string name="login_hint_contrasena">Ingrese su contraseña</string>
+    <string name="login_btn_iniciar_sesion">Iniciar Sesión</string>
+    <string name="login_error_usuario_requerido">Ingrese su usuario</string>
+    <string name="login_error_contrasena_requerida">Ingrese su contraseña</string>
+    <string name="login_error_credenciales">Usuario o contraseña incorrectos</string>
+    <string name="login_exito">Bienvenido, %1$s</string>
+
 </resources>
