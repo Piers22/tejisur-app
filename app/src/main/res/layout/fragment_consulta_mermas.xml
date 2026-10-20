@@ -36,7 +36,179 @@
         app:layout_constraintStart_toStartOf="@id/tvTituloConsulta"
         app:layout_constraintTop_toBottomOf="@id/tvTituloConsulta" />
 
-    <!-- Leyenda de umbral (HU16) -->
+    <!-- Filtros (HU03): lote, fibra, rango de fechas y orden por % -->
+    <LinearLayout
+        android:id="@+id/llFiltros"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_card"
+        android:orientation="vertical"
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="@id/tvTituloConsulta"
+        app:layout_constraintStart_toStartOf="@id/tvTituloConsulta"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtituloConsulta">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_label"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvLabelFiltroLote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filtro_label_lote"
+                    android:textColor="@color/tejisur_text_secondary"
+                    android:textSize="@dimen/text_error"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spinnerFiltroLote"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_label"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvLabelFiltroFibra"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filtro_label_fibra"
+                    android:textColor="@color/tejisur_text_secondary"
+                    android:textSize="@dimen/text_error"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spinnerFiltroFibra"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvLabelFiltroFecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_label"
+            android:text="@string/filtro_label_fecha"
+            android:textColor="@color/tejisur_text_secondary"
+            android:textSize="@dimen/text_error"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnFechaDesde"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_marginEnd="@dimen/margin_label"
+                android:layout_weight="1"
+                android:background="@drawable/bg_input"
+                android:gravity="start|center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="@string/filtro_fecha_desde"
+                android:textAllCaps="false"
+                android:textColor="@color/tejisur_text_primary"
+                android:textSize="@dimen/text_subtitle" />
+
+            <Button
+                android:id="@+id/btnFechaHasta"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="@dimen/margin_label"
+                android:layout_weight="1"
+                android:background="@drawable/bg_input"
+                android:gravity="start|center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="@string/filtro_fecha_hasta"
+                android:textAllCaps="false"
+                android:textColor="@color/tejisur_text_primary"
+                android:textSize="@dimen/text_subtitle" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvErrorFechas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:textColor="@color/tejisur_error"
+            android:textSize="@dimen/text_error"
+            android:visibility="gone"
+            tools:text="@string/error_rango_fechas" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/swOrdenarPorcentaje"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/filtro_ordenar_porcentaje"
+                android:textColor="@color/tejisur_text_primary"
+                android:textSize="@dimen/text_subtitle" />
+
+            <Button
+                android:id="@+id/btnLimpiarFiltros"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_label"
+                android:minWidth="0dp"
+                android:text="@string/btn_limpiar_filtros"
+                android:textAllCaps="false"
+                android:textColor="@color/tejisur_primary"
+                android:textSize="@dimen/text_subtitle"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Banner de alerta (HU16): lotes que superan el umbral -->
+    <TextView
+        android:id="@+id/tvBannerAlerta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_banner_alerta"
+        android:padding="12dp"
+        android:textColor="@color/merma_excesiva"
+        android:textSize="@dimen/text_subtitle"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/tvTituloConsulta"
+        app:layout_constraintStart_toStartOf="@id/tvTituloConsulta"
+        app:layout_constraintTop_toBottomOf="@id/llFiltros"
+        tools:text="⚠ 2 lotes superan el umbral de merma tolerable (5.0%)"
+        tools:visibility="visible" />
+
+    <!-- Leyenda de umbral (HU16): el texto se arma en código con el umbral de Planta -->
     <View
         android:id="@+id/viewLeyendaNormal"
         android:layout_width="12dp"
@@ -52,11 +224,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_label"
         android:layout_marginTop="12dp"
-        android:text="@string/consulta_leyenda_normal"
         android:textColor="@color/tejisur_text_secondary"
         android:textSize="@dimen/text_error"
         app:layout_constraintStart_toEndOf="@id/viewLeyendaNormal"
-        app:layout_constraintTop_toBottomOf="@id/tvSubtituloConsulta" />
+        app:layout_constraintTop_toBottomOf="@id/tvBannerAlerta"
+        tools:text="Dentro del umbral (≤ 5.0%)" />
 
     <View
         android:id="@+id/viewLeyendaExcesiva"
@@ -70,21 +242,36 @@
 
     <TextView
         android:id="@+id/tvLeyendaExcesiva"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_label"
-        android:text="@string/consulta_leyenda_excesiva"
         android:textColor="@color/tejisur_text_secondary"
         android:textSize="@dimen/text_error"
         app:layout_constraintBaseline_toBaselineOf="@id/tvLeyendaNormal"
-        app:layout_constraintStart_toEndOf="@id/viewLeyendaExcesiva" />
+        app:layout_constraintEnd_toEndOf="@id/tvTituloConsulta"
+        app:layout_constraintStart_toEndOf="@id/viewLeyendaExcesiva"
+        tools:text="Merma excesiva (&gt; 5.0%)" />
+
+    <!-- Cantidad de lotes tras aplicar filtros -->
+    <TextView
+        android:id="@+id/tvResultados"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_label"
+        android:textColor="@color/tejisur_text_secondary"
+        android:textSize="@dimen/text_error"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/tvTituloConsulta"
+        app:layout_constraintStart_toStartOf="@id/tvTituloConsulta"
+        app:layout_constraintTop_toBottomOf="@id/tvLeyendaNormal"
+        tools:text="4 lotes encontrados" />
 
     <!-- Lista de lotes -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvLotesMerma"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/margin_small"
         android:clipToPadding="false"
         android:paddingStart="@dimen/margin_screen"
         android:paddingEnd="@dimen/margin_screen"
@@ -93,11 +280,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvLeyendaNormal"
+        app:layout_constraintTop_toBottomOf="@id/tvResultados"
         tools:itemCount="4"
         tools:listitem="@layout/item_lote_merma" />
 
-    <!-- Estado vacío -->
+    <!-- Estado vacío: sin datos o sin coincidencias con los filtros -->
     <TextView
         android:id="@+id/tvSinRegistros"
         android:layout_width="0dp"

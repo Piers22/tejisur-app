@@ -5,19 +5,28 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tejisur.app.R
+import com.tejisur.app.produccion.model.AlertaMerma
+import com.tejisur.app.produccion.model.AnalisisMerma
+import com.tejisur.app.produccion.model.ConfiguracionPlanta
 import com.tejisur.app.produccion.model.ConsumoMateriaPrima
+import com.tejisur.app.produccion.model.DatosDemoProduccion
 import com.tejisur.app.produccion.model.EtapaProductiva
+import com.tejisur.app.produccion.model.FiltrosConsultaMerma
 import com.tejisur.app.produccion.model.MermaProduccion
+import com.tejisur.app.produccion.model.ResumenMermaLote
 import com.tejisur.app.produccion.model.TipoFibra
 import com.tejisur.app.produccion.model.UnidadMedida
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 /**
- * Controlador de HU01 (consumo) y HU02 (merma).
+ * Controlador de HU01 (consumo), HU02 (merma), HU03 (consulta de mermas por
+ * lote) y HU16 (alerta por merma excesiva).
  *
- * Mantiene catálogos (OT/Lotes), el estado temporal de ambos formularios y sus
- * errores de validación, de modo que nada se pierde al rotar la pantalla.
- * Los índices de selección usan -1 como "sin seleccionar".
+ * Mantiene catálogos (OT/Lotes), el estado temporal de los formularios y
+ * filtros, y sus errores de validación, de modo que nada se pierde al rotar
+ * la pantalla ni al cambiar de sección. Las reglas de cálculo de merma viven
+ * en [AnalisisMerma]. Los índices de selección usan -1 como "sin seleccionar".
  */
 class ProduccionViewModel : ViewModel() {
 
@@ -84,13 +93,19 @@ class ProduccionViewModel : ViewModel() {
     // Registros simulados (fuente para HU03 / HU16)
     // ---------------------------------------------------------------------
 
-    private val _consumos = MutableLiveData<List<ConsumoMateriaPrima>>(emptyList())
+    private val inicioSesion = LocalDateTime.now()
+
+    private val _consumos = MutableLiveData<List<ConsumoMateriaPrima>>(
+        if (CARGAR_DATOS_DEMO) DatosDemoProduccion.consumos(inicioSesion) else emptyList()
+    )
     val consumos: LiveData<List<ConsumoMateriaPrima>> = _consumos
 
-    private val _mermas = MutableLiveData<List<MermaProduccion>>(emptyList())
+    private val _mermas = MutableLiveData<List<MermaProduccion>>(
+        if (CARGAR_DATOS_DEMO) DatosDemoProduccion.mermas(inicioSesion) else emptyList()
+    )
     val mermas: LiveData<List<MermaProduccion>> = _mermas
 
-    private var siguienteId = 1L
+    private var siguienteId = if (CARGAR_DATOS_DEMO) DatosDemoProduccion.SIGUIENTE_ID else 1L
 
     // =====================================================================
     // HU01 - Consumo de materia prima
@@ -159,6 +174,7 @@ class ProduccionViewModel : ViewModel() {
             operario = OPERARIO_SESION
         )
         _consumos.value = _consumos.value.orEmpty() + consumo
+        actualizarAnalisis()
         consumoForm = ConsumoFormState()
         return consumo
     }
@@ -209,6 +225,7 @@ class ProduccionViewModel : ViewModel() {
     /**
      * Valida el formulario de HU02. Si es válido, simula el guardado,
      * reinicia el formulario y devuelve el registro creado; si no, devuelve null.
+     * Tras guardar, evalúa el umbral de merma del lote (HU16).
      */
     fun registrarMerma(): MermaProduccion? {
         val form = mermaForm
@@ -233,11 +250,124 @@ class ProduccionViewModel : ViewModel() {
             operario = OPERARIO_SESION
         )
         _mermas.value = _mermas.value.orEmpty() + merma
+        actualizarAnalisis()
+        evaluarUmbralMerma(merma)
         mermaForm = MermaFormState()
         return merma
     }
 
     private fun erroresMermaActuales() = _erroresMerma.value ?: MermaErrores()
+
+    // =====================================================================
+    // HU03 - Consulta de mermas por lote
+    // =====================================================================
+
+    val configuracionPlanta = ConfiguracionPlanta()
+
+    val umbralMerma: Double
+        get() = configuracionPlanta.umbralMermaPorcentaje
+
+    /** Todos los lotes analizables (consumo > 0 y merma en la misma unidad). */
+    private val _resumenes = MutableLiveData<List<ResumenMermaLote>>(emptyList())
+
+    /** Lotes disponibles para el selector de la consulta. */
+    private val _lotesConsultables = MutableLiveData<List<String>>(emptyList())
+    val lotesConsultables: LiveData<List<String>> = _lotesConsultables
+
+    /** Lotes resultantes tras aplicar filtros y ordenación. */
+    private val _resultadoConsulta = MutableLiveData<List<ResumenMermaLote>>(emptyList())
+    val resultadoConsulta: LiveData<List<ResumenMermaLote>> = _resultadoConsulta
+
+    /** Cantidad de lotes que hoy superan el umbral (banner de HU16). */
+    private val _lotesSobreUmbral = MutableLiveData(0)
+    val lotesSobreUmbral: LiveData<Int> = _lotesSobreUmbral
+
+    var filtrosConsulta = FiltrosConsultaMerma()
+        private set
+
+    private val _errorRangoFechas = MutableLiveData<Int?>(null)
+    val errorRangoFechas: LiveData<Int?> = _errorRangoFechas
+
+    fun onFiltroLoteSeleccionado(lote: String?) {
+        if (lote == filtrosConsulta.lote) return
+        aplicarFiltros(filtrosConsulta.copy(lote = lote))
+    }
+
+    fun onFiltroFibraSeleccionada(fibra: TipoFibra?) {
+        if (fibra == filtrosConsulta.tipoFibra) return
+        aplicarFiltros(filtrosConsulta.copy(tipoFibra = fibra))
+    }
+
+    /** Rechaza la fecha si quedaría posterior a "Hasta". `null` quita el filtro. */
+    fun onFechaDesdeSeleccionada(fecha: LocalDate?) {
+        val hasta = filtrosConsulta.fechaHasta
+        if (fecha != null && hasta != null && fecha.isAfter(hasta)) {
+            _errorRangoFechas.value = R.string.error_rango_fechas
+            return
+        }
+        _errorRangoFechas.value = null
+        aplicarFiltros(filtrosConsulta.copy(fechaDesde = fecha))
+    }
+
+    /** Rechaza la fecha si quedaría anterior a "Desde". `null` quita el filtro. */
+    fun onFechaHastaSeleccionada(fecha: LocalDate?) {
+        val desde = filtrosConsulta.fechaDesde
+        if (fecha != null && desde != null && fecha.isBefore(desde)) {
+            _errorRangoFechas.value = R.string.error_rango_fechas
+            return
+        }
+        _errorRangoFechas.value = null
+        aplicarFiltros(filtrosConsulta.copy(fechaHasta = fecha))
+    }
+
+    fun onOrdenarPorPorcentajeCambiado(activo: Boolean) {
+        if (activo == filtrosConsulta.ordenarPorPorcentaje) return
+        aplicarFiltros(filtrosConsulta.copy(ordenarPorPorcentaje = activo))
+    }
+
+    fun limpiarFiltros() {
+        _errorRangoFechas.value = null
+        aplicarFiltros(FiltrosConsultaMerma())
+    }
+
+    private fun aplicarFiltros(filtros: FiltrosConsultaMerma) {
+        filtrosConsulta = filtros
+        _resultadoConsulta.value =
+            AnalisisMerma.filtrarYOrdenar(_resumenes.value.orEmpty(), filtros)
+    }
+
+    /** Recalcula la consulta cada vez que cambian consumos o mermas. */
+    private fun actualizarAnalisis() {
+        val resumenes = AnalisisMerma.resumirPorLote(_consumos.value.orEmpty(), _mermas.value.orEmpty())
+        _resumenes.value = resumenes
+        _lotesConsultables.value = resumenes.map { it.lote }.distinct().sorted()
+        _lotesSobreUmbral.value = resumenes.count { it.superaUmbral(umbralMerma) }
+        aplicarFiltros(filtrosConsulta)
+    }
+
+    // =====================================================================
+    // HU16 - Alerta por merma excesiva
+    // =====================================================================
+
+    private val _alertaMerma = MutableLiveData<Evento<AlertaMerma>>()
+    val alertaMerma: LiveData<Evento<AlertaMerma>> = _alertaMerma
+
+    /**
+     * Si la merma recién registrada deja el lote por encima del umbral, emite
+     * una alerta. Si queda dentro del umbral (o el lote aún no tiene consumo en
+     * la misma unidad), la merma se conserva sin generar alerta.
+     */
+    private fun evaluarUmbralMerma(merma: MermaProduccion) {
+        val resumenLote = _resumenes.value.orEmpty().find {
+            it.ordenTrabajo == merma.ordenTrabajo && it.lote == merma.lote && it.unidad == merma.unidad
+        }
+        AnalisisMerma.evaluarAlerta(resumenLote, umbralMerma, merma.fechaHora)
+            ?.let { _alertaMerma.value = Evento(it) }
+    }
+
+    init {
+        actualizarAnalisis()
+    }
 
     // ---------------------------------------------------------------------
     // Validaciones compartidas
@@ -259,5 +389,8 @@ class ProduccionViewModel : ViewModel() {
 
         /** Operario simulado hasta integrar el login real (Sprint 2). */
         private const val OPERARIO_SESION = "OP-001"
+
+        /** Carga lotes de ejemplo para la demo del Sprint 1 (ver [DatosDemoProduccion]). */
+        private const val CARGAR_DATOS_DEMO = true
     }
 }
