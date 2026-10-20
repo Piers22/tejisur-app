@@ -10,6 +10,7 @@
     <dimen name="height_button">56dp</dimen>
     <dimen name="corner_radius">12dp</dimen>
     <dimen name="width_indicador">6dp</dimen>
+    <dimen name="size_logo_login">160dp</dimen>
 
     <dimen name="text_title">24sp</dimen>
     <dimen name="text_subtitle">14sp</dimen>

@@ -18,6 +18,7 @@ import com.tejisur.app.produccion.ui.ConsultaMermasFragment
 import com.tejisur.app.produccion.ui.ProduccionViewModel
 import com.tejisur.app.produccion.ui.RegistroConsumoFragment
 import com.tejisur.app.produccion.ui.RegistroMermaFragment
+import com.tejisur.app.produccion.ui.LoginFragment
 
 /**
  * Contenedor de las secciones de Producción con una barra inferior:
@@ -97,22 +98,6 @@ class MainActivity : AppCompatActivity() {
             TextViewCompat.setCompoundDrawableTintList(vista, ColorStateList.valueOf(color))
         }
     }
-
-    /** HU16 - Muestra lote, OT, % de merma y umbral superado. */
-    private fun mostrarAlertaMerma(alerta: AlertaMerma) {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.alerta_titulo)
-            .setMessage(
-                getString(
-                    R.string.alerta_mensaje,
-                    alerta.lote,
-                    alerta.ordenTrabajo,
-                    alerta.porcentajeMerma,
-                    alerta.umbral
-                )
-            )
-            .setPositiveButton(R.string.alerta_btn_ver_consulta) { _, _ ->
-                mostrarSeccion(Seccion.CONSULTA)
             }
             .setNegativeButton(R.string.alerta_btn_entendido, null)
             .show()
