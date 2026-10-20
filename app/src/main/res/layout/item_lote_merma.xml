@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Fila del RecyclerView (HU03) con soporte de alerta (HU16).
+    Si la merma supera el umbral de Planta, LoteMermaAdapter cambia:
+      - viewIndicadorMerma.setBackgroundColor(merma_excesiva)
+      - clItemLoteMerma.backgroundTintList (merma_excesiva_bg)
+      - tvPorcentajeMerma (texto + backgroundTintList) y tvEstadoMerma
+-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clItemLoteMerma"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="12dp"
+    android:background="@drawable/bg_card"
+    android:paddingTop="@dimen/padding_card"
+    android:paddingEnd="@dimen/padding_card"
+    android:paddingBottom="@dimen/padding_card">
+
+    <!-- Indicador de color (verde: normal / rojo: excesiva) -->
+    <View
+        android:id="@+id/viewIndicadorMerma"
+        android:layout_width="@dimen/width_indicador"
+        android:layout_height="0dp"
+        android:background="@color/merma_normal"
+        android:contentDescription="@string/cd_indicador_merma"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- OT -->
+    <TextView
+        android:id="@+id/tvLabelOtItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_card"
+        android:text="@string/item_label_ot"
+        android:textColor="@color/tejisur_text_secondary"
+        android:textSize="@dimen/text_error"
+        app:layout_constraintStart_toEndOf="@id/viewIndicadorMerma"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvOrdenTrabajo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_label"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/tejisur_text_primary"
+        android:textSize="@dimen/text_value"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/tvPorcentajeMerma"
+        app:layout_constraintStart_toStartOf="@id/tvLabelOtItem"
+        app:layout_constraintTop_toBottomOf="@id/tvLabelOtItem"
+        tools:text="OT-2026-001" />
+
+    <!-- Badge % Merma -->
+    <TextView
+        android:id="@+id/tvPorcentajeMerma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_badge"
+        android:paddingStart="12dp"
+        android:paddingTop="@dimen/margin_small"
+        android:paddingEnd="12dp"
+        android:paddingBottom="@dimen/margin_small"
+        android:textColor="@color/merma_normal"
+        android:textSize="@dimen/text_body"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="3.2%" />
+
+    <TextView
+        android:id="@+id/tvLabelPorcentajeItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:text="@string/item_label_porcentaje"
+        android:textColor="@color/tejisur_text_secondary"
+        android:textSize="@dimen/text_error"
+        app:layout_constraintEnd_toEndOf="@id/tvPorcentajeMerma"
+        app:layout_constraintStart_toStartOf="@id/tvPorcentajeMerma"
+        app:layout_constraintTop_toBottomOf="@id/tvPorcentajeMerma" />
+
+    <!-- Lote -->
+    <TextView
+        android:id="@+id/tvLabelLoteItem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/item_label_lote"
+        android:textColor="@color/tejisur_text_secondary"
+        android:textSize="@dimen/text_error"
+        app:layout_constraintEnd_toStartOf="@id/tvLabelConsumoItem"
+        app:layout_constraintStart_toStartOf="@id/tvLabelOtItem"
+        app:layout_constraintTop_toBottomOf="@id/tvOrdenTrabajo" />
+
+    <TextView
+        android:id="@+id/tvLote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/tejisur_text_primary"
+        android:textSize="@dimen/text_body"
+        app:layout_constraintEnd_toEndOf="@id/tvLabelLoteItem"
+        app:layout_constraintStart_toStartOf="@id/tvLabelLoteItem"
+        app:layout_constraintTop_toBottomOf="@id/tvLabelLoteItem"
+        tools:text="L-0101" />
+
+    <!-- Consumo -->
+    <TextView
+        android:id="@+id/tvLabelConsumoItem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/item_label_consumo"
+        android:textColor="@color/tejisur_text_secondary"
+        android:textSize="@dimen/text_error"
+        app:layout_constraintEnd_toStartOf="@id/tvLabelMermaItem"
+        app:layout_constraintStart_toEndOf="@id/tvLabelLoteItem"
+        app:layout_constraintTop_toTopOf="@id/tvLabelLoteItem" />
+
+    <TextView
+        android:id="@+id/tvConsumo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/tejisur_text_primary"
+        android:textSize="@dimen/text_body"
+        app:layout_constraintEnd_toEndOf="@id/tvLabelConsumoItem"
+        app:layout_constraintStart_toStartOf="@id/tvLabelConsumoItem"
+        app:layout_constraintTop_toBottomOf="@id/tvLabelConsumoItem"
+        tools:text="120.00 kg" />
+
+    <!-- Merma -->
+    <TextView
+        android:id="@+id/tvLabelMermaItem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/item_label_merma"
+        android:textColor="@color/tejisur_text_secondary"
+        android:textSize="@dimen/text_error"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvLabelConsumoItem"
+        app:layout_constraintTop_toTopOf="@id/tvLabelLoteItem" />
+
+    <TextView
+        android:id="@+id/tvMerma"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/tejisur_text_primary"
+        android:textSize="@dimen/text_body"
+        app:layout_constraintEnd_toEndOf="@id/tvLabelMermaItem"
+        app:layout_constraintStart_toStartOf="@id/tvLabelMermaItem"
+        app:layout_constraintTop_toBottomOf="@id/tvLabelMermaItem"
+        tools:text="3.84 kg" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrierValores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="tvLote,tvConsumo,tvMerma" />
+
+    <!-- Fibra y fecha del último registro de merma (filtros de HU03) -->
+    <TextView
+        android:id="@+id/tvDetalleLote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_label"
+        android:textColor="@color/tejisur_text_secondary"
+        android:textSize="@dimen/text_error"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvLabelOtItem"
+        app:layout_constraintTop_toBottomOf="@id/barrierValores"
+        tools:text="Algodón Pima · 16/10/2026" />
+
+    <!-- Estado (texto de alerta HU16) -->
+    <TextView
+        android:id="@+id/tvEstadoMerma"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_label"
+        android:text="@string/item_estado_normal"
+        android:textColor="@color/merma_normal"
+        android:textSize="@dimen/text_error"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvLabelOtItem"
+        app:layout_constraintTop_toBottomOf="@id/tvDetalleLote" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

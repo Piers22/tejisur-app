@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- HU02 - Registrar merma de producción -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tejisur_background"
+    android:fillViewport="true"
+    tools:context=".produccion.ui.RegistroMermaFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clRegistroMerma"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_screen">
+
+        <!-- Encabezado -->
+        <TextView
+            android:id="@+id/tvTituloMerma"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/merma_titulo"
+            android:textColor="@color/tejisur_primary"
+            android:textSize="@dimen/text_title"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvSubtituloMerma"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="@string/merma_subtitulo"
+            android:textColor="@color/tejisur_text_secondary"
+            android:textSize="@dimen/text_subtitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTituloMerma" />
+
+        <!-- Orden de Trabajo -->
+        <TextView
+            android:id="@+id/tvLabelOt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_section"
+            android:text="@string/label_orden_trabajo"
+            android:textColor="@color/tejisur_text_primary"
+            android:textSize="@dimen/text_label"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSubtituloMerma" />
+
+        <Spinner
+            android:id="@+id/spinnerOt"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height_input"
+            android:layout_marginTop="@dimen/margin_label"
+            android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelOt" />
+
+        <TextView
+            android:id="@+id/tvErrorOt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:textColor="@color/tejisur_error"
+            android:textSize="@dimen/text_error"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinnerOt"
+            tools:text="@string/error_ot_requerida" />
+
+        <!-- Lote -->
+        <TextView
+            android:id="@+id/tvLabelLote"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_section"
+            android:text="@string/label_lote"
+            android:textColor="@color/tejisur_text_primary"
+            android:textSize="@dimen/text_label"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvErrorOt" />
+
+        <Spinner
+            android:id="@+id/spinnerLote"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height_input"
+            android:layout_marginTop="@dimen/margin_label"
+            android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelLote" />
+
+        <TextView
+            android:id="@+id/tvErrorLote"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:textColor="@color/tejisur_error"
+            android:textSize="@dimen/text_error"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinnerLote"
+            tools:text="@string/error_lote_requerido" />
+
+        <!-- Etapa productiva -->
+        <TextView
+            android:id="@+id/tvLabelEtapa"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_section"
+            android:text="@string/label_etapa_productiva"
+            android:textColor="@color/tejisur_text_primary"
+            android:textSize="@dimen/text_label"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvErrorLote" />
+
+        <Spinner
+            android:id="@+id/spinnerEtapa"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height_input"
+            android:layout_marginTop="@dimen/margin_label"
+            android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelEtapa" />
+
+        <TextView
+            android:id="@+id/tvErrorEtapa"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:textColor="@color/tejisur_error"
+            android:textSize="@dimen/text_error"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinnerEtapa"
+            tools:text="@string/error_etapa_requerida" />
+
+        <!-- Cantidad de merma -->
+        <TextView
+            android:id="@+id/tvLabelCantidadMerma"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_section"
+            android:labelFor="@id/etCantidadMerma"
+            android:text="@string/label_cantidad_merma"
+            android:textColor="@color/tejisur_text_primary"
+            android:textSize="@dimen/text_label"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvErrorEtapa" />
+
+        <EditText
+            android:id="@+id/etCantidadMerma"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height_input"
+            android:layout_marginTop="@dimen/margin_label"
+            android:autofillHints="none"
+            android:background="@drawable/bg_input"
+            android:hint="@string/hint_cantidad_merma"
+            android:imeOptions="actionDone"
+            android:inputType="numberDecimal"
+            android:paddingStart="@dimen/padding_input"
+            android:paddingEnd="@dimen/padding_input"
+            android:textColor="@color/tejisur_text_primary"
+            android:textSize="@dimen/text_body"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelCantidadMerma" />
+
+        <!-- Unidad de medida -->
+        <TextView
+            android:id="@+id/tvLabelUnidad"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_section"
+            android:text="@string/label_unidad"
+            android:textColor="@color/tejisur_text_primary"
+            android:textSize="@dimen/text_label"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etCantidadMerma" />
+
+        <RadioGroup
+            android:id="@+id/rgUnidad"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_label"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelUnidad">
+
+            <RadioButton
+                android:id="@+id/rbKg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/tejisur_primary"
+                android:text="@string/unidad_kg"
+                android:textColor="@color/tejisur_text_primary"
+                android:textSize="@dimen/text_body" />
+
+            <RadioButton
+                android:id="@+id/rbMetros"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/tejisur_primary"
+                android:text="@string/unidad_m"
+                android:textColor="@color/tejisur_text_primary"
+                android:textSize="@dimen/text_body" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tvErrorUnidad"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:textColor="@color/tejisur_error"
+            android:textSize="@dimen/text_error"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rgUnidad"
+            tools:text="@string/error_unidad_requerida" />
+
+        <!-- Acción -->
+        <Button
+            android:id="@+id/btnRegistrar"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height_button"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/bg_button_primary"
+            android:text="@string/btn_registrar"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_body"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvErrorUnidad"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

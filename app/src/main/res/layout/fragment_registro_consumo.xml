@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- HU01 - Registrar consumo de materia prima -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tejisur_background"
+    android:fillViewport="true"
+    tools:context=".produccion.ui.RegistroConsumoFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clRegistroConsumo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_screen">
+
+        <!-- Encabezado -->
+        <TextView
+            android:id="@+id/tvTituloConsumo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/consumo_titulo"
+            android:textColor="@color/tejisur_primary"
+            android:textSize="@dimen/text_title"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvSubtituloConsumo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="@string/consumo_subtitulo"
+            android:textColor="@color/tejisur_text_secondary"
+            android:textSize="@dimen/text_subtitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTituloConsumo" />
+
+        <!-- Orden de Trabajo -->
+        <TextView
+            android:id="@+id/tvLabelOt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_section"
+            android:text="@string/label_orden_trabajo"
+            android:textColor="@color/tejisur_text_primary"
+            android:textSize="@dimen/text_label"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSubtituloConsumo" />
+
+        <Spinner
+            android:id="@+id/spinnerOt"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height_input"
+            android:layout_marginTop="@dimen/margin_label"
+            android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelOt" />
+
+        <TextView
+            android:id="@+id/tvErrorOt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:textColor="@color/tejisur_error"
+            android:textSize="@dimen/text_error"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinnerOt"
+            tools:text="@string/error_ot_requerida"
+            tools:visibility="visible" />
+
+        <!-- Lote -->
+        <TextView
+            android:id="@+id/tvLabelLote"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_section"
+            android:text="@string/label_lote"
+            android:textColor="@color/tejisur_text_primary"
+            android:textSize="@dimen/text_label"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvErrorOt" />
+
+        <Spinner
+            android:id="@+id/spinnerLote"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height_input"
+            android:layout_marginTop="@dimen/margin_label"
+            android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelLote" />
+
+        <TextView
+            android:id="@+id/tvErrorLote"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:textColor="@color/tejisur_error"
+            android:textSize="@dimen/text_error"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spinnerLote"
+            tools:text="@string/error_lote_requerido" />
+
+        <!-- Cantidad consumida -->
+        <TextView
+            android:id="@+id/tvLabelCantidad"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_section"
+            android:labelFor="@id/etCantidad"
+            android:text="@string/label_cantidad_consumida"
+            android:textColor="@color/tejisur_text_primary"
+            android:textSize="@dimen/text_label"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvErrorLote" />
+
+        <EditText
+            android:id="@+id/etCantidad"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height_input"
+            android:layout_marginTop="@dimen/margin_label"
+            android:autofillHints="none"
+            android:background="@drawable/bg_input"
+            android:hint="@string/hint_cantidad_consumida"
+            android:imeOptions="actionDone"
+            android:inputType="numberDecimal"
+            android:paddingStart="@dimen/padding_input"
+            android:paddingEnd="@dimen/padding_input"
+            android:textColor="@color/tejisur_text_primary"
+            android:textSize="@dimen/text_body"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelCantidad" />
+
+        <!-- Unidad de medida -->
+        <TextView
+            android:id="@+id/tvLabelUnidad"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_section"
+            android:text="@string/label_unidad"
+            android:textColor="@color/tejisur_text_primary"
+            android:textSize="@dimen/text_label"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etCantidad" />
+
+        <RadioGroup
+            android:id="@+id/rgUnidad"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_label"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelUnidad">
+
+            <RadioButton
+                android:id="@+id/rbKg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/tejisur_primary"
+                android:text="@string/unidad_kg"
+                android:textColor="@color/tejisur_text_primary"
+                android:textSize="@dimen/text_body" />
+
+            <RadioButton
+                android:id="@+id/rbMetros"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/tejisur_primary"
+                android:text="@string/unidad_m"
+                android:textColor="@color/tejisur_text_primary"
+                android:textSize="@dimen/text_body" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tvErrorUnidad"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:textColor="@color/tejisur_error"
+            android:textSize="@dimen/text_error"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rgUnidad"
+            tools:text="@string/error_unidad_requerida" />
+
+        <!-- Tipo de fibra -->
+        <TextView
+            android:id="@+id/tvLabelFibra"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_section"
+            android:text="@string/label_tipo_fibra"
+            android:textColor="@color/tejisur_text_primary"
+            android:textSize="@dimen/text_label"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvErrorUnidad" />
+
+        <RadioGroup
+            android:id="@+id/rgTipoFibra"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_label"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelFibra">
+
+            <RadioButton
+                android:id="@+id/rbPima"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/tejisur_primary"
+                android:text="@string/fibra_pima"
+                android:textColor="@color/tejisur_text_primary"
+                android:textSize="@dimen/text_body" />
+
+            <RadioButton
+                android:id="@+id/rbAlpaca"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/tejisur_primary"
+                android:text="@string/fibra_alpaca"
+                android:textColor="@color/tejisur_text_primary"
+                android:textSize="@dimen/text_body" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tvErrorFibra"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:textColor="@color/tejisur_error"
+            android:textSize="@dimen/text_error"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rgTipoFibra"
+            tools:text="@string/error_fibra_requerida" />
+
+        <!-- Acción -->
+        <Button
+            android:id="@+id/btnRegistrar"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/height_button"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/bg_button_primary"
+            android:text="@string/btn_registrar"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_body"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvErrorFibra"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
